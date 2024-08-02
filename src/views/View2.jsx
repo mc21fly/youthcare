@@ -1,128 +1,35 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import FieldText from "../components/FieldText/FieldText";
+import FieldDate from "../components/FieldDate/FieldDate";
+import FieldTextarea from "../components/FieldTextarea/FieldTextarea";
+import FieldCheckbox from "../components/FieldCheckbox/FieldCheckbox";
+import FieldCheckboxText from "../components/FieldCheckboxText/FieldCheckboxText";
 
 export default function View2({ handleNext, handlePrev }) {
-    const [answers, setAnswers] = useState({});
-    const [isDisabled, setIsDisabled] = useState(true);
+    const [validators, setValidators] = useState([]);
 
-    useEffect(() => {
-        const stored = localStorage.getItem("answers_v2");
-        const parsed = JSON.parse(stored);
+    function handleChange(id, value) {
+        const answers = localStorage.getItem("answers");
+        const parsed = { ...JSON.parse(answers) };
 
-        if (parsed) {
-            for (const [key, value] of Object.entries(parsed)) {
-                const field = document.querySelector(`#${key}`);
-
-                if (key.startsWith("q11c")) {
-                    field.checked = value;
-
-                    if (key === "q11c25i") {
-                        field.value = value;
-                    }
-
-                    if (key === "q11c25") {
-                        setIsDisabled(!value);
-                    }
-                } else {
-                    field.value = value;
-                }
-            }
-
-            setAnswers(parsed);
-        }
-    }, []);
-
-    function handleInput(e) {
-        const _answers = {
-            ...answers,
-        };
-        _answers[`${e.target.id}`] = e.target.value;
-
-        setAnswers({
-            ..._answers,
-        });
-        localStorage.setItem(
-            "answers_v2",
-            JSON.stringify({
-                ..._answers,
-            })
-        );
+        parsed[id] = value;
+        localStorage.setItem("answers", JSON.stringify(parsed));
     }
 
-    function handleCheckmark(e, callback) {
-        const _answers = {
-            ...answers,
-        };
-        _answers[`${e.target.id}`] = e.target.checked;
-
-        if (callback) {
-            callback(e.target.checked);
-        }
-
-        setAnswers({
-            ..._answers,
-        });
-        localStorage.setItem(
-            "answers_v2",
-            JSON.stringify({
-                ..._answers,
-            })
-        );
-    }
-
-    function q11c25(value) {
-        document.querySelector("#q11c25i").disabled = !value;
-    }
-
-    function handleBlur(e) {
-        e.target.style.border = "1px solid #414042";
-        e.target.style.outline = "none";
-    }
-
-    function validate() {
-        let isValid = true;
-        const questions = document.querySelectorAll("[data-question]");
-        const checkboxes = document.querySelectorAll("[data-checkbox]");
-
-        questions.forEach((question) => {
-            if (question.value === "" && question.dataset.hidden !== "true") {
-                question.style.outline = "2px solid red";
-                question.style.border = "1px solid red";
-                isValid = false;
-            }
-
-            if (question.dataset.date && question.dataset.hidden !== "true" && !isValidDate(question.value)) {
-                question.style.outline = "2px solid red";
-                question.style.border = "1px solid red";
-                isValid = false;
-            }
+    function handleValidation() {
+        const result = validators.map(({ validator }) => {
+            return validator();
         });
 
-        checkboxes.forEach((checkbox) => {
-            if (!checkbox.checked) {
-                const answers = localStorage.getItem("answers_v2");
-                const parsed = JSON.parse(answers);
-
-                const q = {};
-                q[`${checkbox.id}`] = false;
-
-                localStorage.setItem(
-                    "answers_v2",
-                    JSON.stringify({
-                        ...parsed,
-                        ...q,
-                    })
-                );
-            }
-        });
-
-        if (isValid) handleNext();
+        if (!result.includes(false)) handleNext();
     }
 
-    function isValidDate(date) {
-        const match = date.match(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/g);
+    function addValidator(id, validator) {
+        setValidators((prevValidators) => [...prevValidators, { id, validator }]);
+    }
 
-        if (match) return true;
-        return false;
+    function removeValidator(id) {
+        setValidators((prevValidators) => [...prevValidators.filter((validator) => validator.id !== id)]);
     }
 
     return (
@@ -136,46 +43,16 @@ export default function View2({ handleNext, handlePrev }) {
                     </div>
                     <div className='form__fields'>
                         <div className='form__fields--row'>
-                            <div className='field'>
-                                <label htmlFor='q8' className='small bold'>
-                                    Primary care physician
-                                </label>
-                                <input name='q8' id='q8' data-question type='text' onChange={handleInput} onBlur={handleBlur} />
-                            </div>
-                            <div className='field'>
-                                <label htmlFor='q8sub' className='small bold'>
-                                    Date of last visit
-                                </label>
-                                <input name='q8sub' id='q8sub' data-question data-date type='text' placeholder='MM/DD/YYYY' onChange={handleInput} onBlur={handleBlur} />
-                            </div>
+                            <FieldText id='q9' label='Primary care physician' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldDate id='q10' label='Date of last visit' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
                         </div>
                         <div className='form__fields--row'>
-                            <div className='field'>
-                                <label htmlFor='q9' className='small bold'>
-                                    Dental provider
-                                </label>
-                                <input name='q9' id='q9' data-question type='text' onChange={handleInput} onBlur={handleBlur} />
-                            </div>
-                            <div className='field'>
-                                <label htmlFor='q9sub' className='small bold'>
-                                    Date of last visit
-                                </label>
-                                <input name='q9sub' id='q9sub' data-question data-date type='text' placeholder='MM/DD/YYYY' onChange={handleInput} onBlur={handleBlur} />
-                            </div>
+                            <FieldText id='q11' label='Dental provider' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldDate id='q12' label='Date of last visit' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
                         </div>
                         <div className='form__fields--row'>
-                            <div className='field'>
-                                <label htmlFor='q10' className='small bold'>
-                                    List of member’s medications
-                                </label>
-                                <textarea name='q10' id='q10' data-question onChange={handleInput} onBlur={handleBlur}></textarea>
-                            </div>
-                            <div className='field'>
-                                <label htmlFor='q10sub' className='small bold'>
-                                    Additional treatments or services
-                                </label>
-                                <textarea name='q10sub' id='q10sub' data-question onChange={handleInput} onBlur={handleBlur}></textarea>
-                            </div>
+                            <FieldTextarea id='q13' label='List of member’s medications' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldTextarea id='q14' label='Additional treatments or services' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
                         </div>
                         <div className='form__fields--row no-input'>
                             <div className='field'>
@@ -185,121 +62,38 @@ export default function View2({ handleNext, handlePrev }) {
                         </div>
                         <div className='form__fields--row checkbox'>
                             <div className='field'>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c1' id='q11c1' />
-                                    <label htmlFor='q11c1'>Heart condition/high blood pressure</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c2' id='q11c2' />
-                                    <label htmlFor='q11c2'>Asthma</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c3' id='q11c3' />
-                                    <label htmlFor='q11c3'>Seizure/epilepsy</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c4' id='q11c4' />
-                                    <label htmlFor='q11c4'>Failure to thrive</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c5' id='q11c5' />
-                                    <label htmlFor='q11c5'>
-                                        Central nervous system/traumatic <br />
-                                        brain injury/shaken baby
-                                    </label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c6' id='q11c6' />
-                                    <label htmlFor='q11c6'>Broken bones</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c7' id='q11c7' />
-                                    <label htmlFor='q11c7'>Internal injuries</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c8' id='q11c8' />
-                                    <label htmlFor='q11c8'>Diabetes</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c9' id='q11c9' />
-                                    <label htmlFor='q11c9'>Hemophilia</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c10' id='q11c10' />
-                                    <label htmlFor='q11c10'>Sickle cell disease</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c11' id='q11c11' />
-                                    <label htmlFor='q11c11'>Cancer</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c12' id='q11c12' />
-                                    <label htmlFor='q11c12'>
-                                        Cerebral palsy/muscular dystrophy/
-                                        <br />
-                                        multiple sclerosis/paralysis
-                                    </label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c13' id='q11c13' />
-                                    <label htmlFor='q11c13'>Cystic fibrosis</label>
-                                </div>
+                                <FieldCheckbox id='q15' label='Heart condition/high blood pressure' onChange={handleChange} />
+                                <FieldCheckbox id='q16' label='Asthma' onChange={handleChange} />
+                                <FieldCheckbox id='q17' label='Seizure/epilepsy' onChange={handleChange} />
+                                <FieldCheckbox id='q18' label='Failure to thrive' onChange={handleChange} />
+                                <FieldCheckbox
+                                    id='q19'
+                                    label={`Central nervous system/traumatic \n
+                                        brain injury/shaken baby`}
+                                    onChange={handleChange}
+                                />
+                                <FieldCheckbox id='q20' label='Broken bones' onChange={handleChange} />
+                                <FieldCheckbox id='q21' label='Internal injuries' onChange={handleChange} />
+                                <FieldCheckbox id='q22' label='Diabetes' onChange={handleChange} />
+                                <FieldCheckbox id='q23' label='Hemophilia' onChange={handleChange} />
+                                <FieldCheckbox id='q24' label='Sickle cell disease' onChange={handleChange} />
+                                <FieldCheckbox id='q25' label='Cancer' onChange={handleChange} />
+                                <FieldCheckbox id='q26' label={`Cerebral palsy/muscular dystrophy/\nmultiple sclerosis/paralysis`} onChange={handleChange} />
+                                <FieldCheckbox id='q27' label='Cystic fibrosis' onChange={handleChange} />
                             </div>
                             <div className='field'>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c14' id='q11c14' />
-                                    <label htmlFor='q11c14'>Serious burns that require wound care or surgery</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c15' id='q11c15' />
-                                    <label htmlFor='q11c15'>IV antibiotics</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c16' id='q11c16' />
-                                    <label htmlFor='q11c16'>HIV-positive/AIDS</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c17' id='q11c17' />
-                                    <label htmlFor='q11c17'>Transplant or transplant candidate</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c18' id='q11c18' />
-                                    <label htmlFor='q11c18'>Hospitalization (within the last 30 days)</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c19' id='q11c19' />
-                                    <label htmlFor='q11c19'>Pregnancy</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c20' id='q11c20' />
-                                    <label htmlFor='q11c20'>Private duty nursing/skilled nursing visits</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c21' id='q11c21' />
-                                    <label htmlFor='q11c21'>Personal care services</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c22' id='q11c22' />
-                                    <label htmlFor='q11c22'>
-                                        Home medical equipment/Durable <br />
-                                        Medical Equipment (DME) need identified
-                                    </label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c23' id='q11c23' />
-                                    <label htmlFor='q11c23'>Hearing or vision loss (excluding eyeglasses)</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={handleCheckmark} name='q11c24' id='q11c24' />
-                                    <label htmlFor='q11c24'>Osteogenesis imperfecta (brittle bone disease)</label>
-                                </div>
-                                <div className='field__checkbox'>
-                                    <input type='checkbox' data-checkbox onChange={(e) => handleCheckmark(e, q11c25)} name='q11c25' id='q11c25' />
-                                    <label htmlFor='q11c25'>Any conditions not listed above:</label>
-                                </div>
-                                <div className='field__checkbox--text'>
-                                    <input type='text' name='q11c25i' id='q11c25i' disabled={isDisabled} onChange={handleInput} onBlur={handleBlur} />
-                                </div>
+                                <FieldCheckbox id='q28' label='Serious burns that require wound care or surgery' onChange={handleChange} />
+                                <FieldCheckbox id='q29' label='IV antibiotics' onChange={handleChange} />
+                                <FieldCheckbox id='q30' label='HIV-positive/AIDS' onChange={handleChange} />
+                                <FieldCheckbox id='q31' label='Transplant or transplant candidate' onChange={handleChange} />
+                                <FieldCheckbox id='q32' label='Hospitalization (within the last 30 days)' onChange={handleChange} />
+                                <FieldCheckbox id='q33' label='Pregnancy' onChange={handleChange} />
+                                <FieldCheckbox id='q34' label='Private duty nursing/skilled nursing visits' onChange={handleChange} />
+                                <FieldCheckbox id='q35' label='Personal care services' onChange={handleChange} />
+                                <FieldCheckbox id='q36' label={`Home medical equipment/Durable Medical Equipment (DME) need identified`} onChange={handleChange} />
+                                <FieldCheckbox id='q37' label='Hearing or vision loss (excluding eyeglasses)' onChange={handleChange} />
+                                <FieldCheckbox id='q38' label='Osteogenesis imperfecta (brittle bone disease)' onChange={handleChange} />
+                                <FieldCheckboxText id='q39' label='Any conditions not listed above:' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
                             </div>
                         </div>
                     </div>
@@ -307,7 +101,7 @@ export default function View2({ handleNext, handlePrev }) {
                         <button className='button button--prev' onClick={handlePrev}>
                             Previous
                         </button>
-                        <button className='button button--next' onClick={validate}>
+                        <button className='button button--next' onClick={handleValidation}>
                             Next
                         </button>
                     </div>

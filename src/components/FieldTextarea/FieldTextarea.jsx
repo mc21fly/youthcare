@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function FieldText({ id, label, onChange, onAddValidator, onRemoveValidator }) {
+export default function FieldTextarea({ id, label, onChange, onAddValidator, onRemoveValidator }) {
     const input = useRef();
 
     useEffect(() => {
@@ -43,7 +43,7 @@ export default function FieldText({ id, label, onChange, onAddValidator, onRemov
             <label htmlFor={id} className='small bold'>
                 {label ? label : "Label placeholder"}
             </label>
-            <input ref={input} name={id} id={id} type='text' maxLength='255' onBlur={handleBlur} onChange={handleChange} />
+            <textarea ref={input} name={id} id={id} maxLength='255' onBlur={handleBlur} onChange={handleChange}></textarea>
         </div>
     );
 }
