@@ -7,15 +7,14 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
     const [showSub, setShowSub] = useState(false);
 
     useEffect(() => {
-        if (select.current.value === subCond) setShowSub(true);
-    }, []);
-
-    useEffect(() => {
         const answers = localStorage.getItem("answers");
         const parsed = JSON.parse(answers);
         if (parsed) {
             const value = parsed[`${id}`];
-            if (value) select.current.value = value;
+            if (value) {
+                select.current.value = value;
+                if (select.current.value === subCond) setShowSub(true);
+            }
         }
 
         if (onAddValidator) onAddValidator(id, validator);
