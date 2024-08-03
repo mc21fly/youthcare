@@ -1,17 +1,15 @@
 import { useState } from "react";
-
-import Header from "./components/Header/Header.jsx";
-import Footer from "./components/Footer/Footer.jsx";
-import View1 from "./views/View1.jsx";
-import View2 from "./views/View2.jsx";
-import View3 from "./views/View3.jsx";
-import View4 from "./views/View4.jsx";
+import { Header, Footer } from "./components";
+import { View1, View2, View3, View4 } from "./views";
+import { useStorage } from "./hooks";
 
 export default function App() {
     const [currentView, setCurrentView] = useState("view1");
+    const [, getStored] = useStorage("answers");
 
     function send() {
-        console.log("sent");
+        const answers = getStored();
+        console.log(answers);
 
         localStorage.clear();
         setCurrentView("view4");

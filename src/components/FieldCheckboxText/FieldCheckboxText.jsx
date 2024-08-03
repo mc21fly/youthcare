@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 
-export default function FieldCheckbox({ id, label, onChange, onAddValidator, onRemoveValidator }) {
+export default function FieldCheckboxText({ id, label, onChange, onAddValidator, onRemoveValidator }) {
     const input = useRef();
     const checkbox = useRef();
 
@@ -57,12 +57,12 @@ export default function FieldCheckbox({ id, label, onChange, onAddValidator, onR
 
     return (
         <>
-            <div className='field__checkbox'>
-                <input type='checkbox' ref={checkbox} name={id} id={id} onChange={handleChange} />
+            <div className="field__checkbox">
+                <input type="checkbox" ref={checkbox} name={id} id={id} onChange={handleChange} />
                 <label htmlFor={id}>{label ? label : "Label placeholder"}</label>
             </div>
-            <div className='field__checkbox--text'>
-                <input ref={input} disabled type='text' onChange={handleInput} onBlur={handleBlur} id={`${id}sub`} />
+            <div className="field__checkbox--text">
+                <input ref={input} disabled type="text" onChange={handleInput} onBlur={handleBlur} id={`${id}sub`} />
             </div>
         </>
     );

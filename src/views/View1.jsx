@@ -1,92 +1,87 @@
-import { useState } from "react";
-import FieldDate from "../components/FieldDate/FieldDate";
-import FieldEmail from "../components/FieldEmail/FieldEmail";
-import FieldSelect from "../components/FieldSelect/FieldSelect";
-import FieldText from "../components/FieldText/FieldText";
+import { FieldText, FieldSelect, FieldEmail, FieldDate } from "../components";
+import { useStorage, useValidation } from "../hooks";
 
 export default function View1({ handleNext }) {
-    const [validators, setValidators] = useState([]);
-
-    function handleChange(id, value) {
-        const answers = localStorage.getItem("answers");
-        const parsed = { ...JSON.parse(answers) };
-
-        parsed[id] = value;
-        localStorage.setItem("answers", JSON.stringify(parsed));
-    }
-
-    function handleValidation() {
-        const result = validators.map(({ validator }) => {
-            return validator();
-        });
-
-        if (!result.includes(false)) handleNext();
-    }
-
-    function addValidator(id, validator) {
-        setValidators((prevValidators) => [...prevValidators, { id, validator }]);
-    }
-
-    function removeValidator(id) {
-        setValidators((prevValidators) => [...prevValidators.filter((validator) => validator.id !== id)]);
-    }
+    const [validate, addValidator, removeValidator] = useValidation();
+    const [store] = useStorage("answers");
 
     return (
         <>
-            <div className='container'>
-                <section className='heading padding'>
-                    <div className='left'>
-                        <h1 className='text-blue'>
-                            Fill out the Personal <br className='mbl-hide' />
-                            Wellness Assessment <br className='mbl-hide' />
+            <div className="container">
+                <section className="heading padding">
+                    <div className="left">
+                        <h1 className="text-blue">
+                            Fill out the Personal <br className="mbl-hide" />
+                            Wellness Assessment <br className="mbl-hide" />
                             for foster children.
                         </h1>
                     </div>
-                    <div className='right'>
+                    <div className="right">
                         <p>
-                            The Personal Wellness Assessment is a short form about the YouthCare member’s health journey. It’s important for us to know about health conditions, recent hospital visits, medications, and more. This way, we can
-                            connect foster children with the right care.
+                            The Personal Wellness Assessment is a short form about the YouthCare member’s health journey. It’s important for us to know about health conditions,
+                            recent hospital visits, medications, and more. This way, we can connect foster children with the right care.
                         </p>
                     </div>
                 </section>
             </div>
-            <div className='container'>
-                <section className='form padding'>
-                    <div className='form__header'>
+            <div className="container">
+                <section className="form padding">
+                    <div className="form__header">
                         <hr />
-                        <h2 className='text-blue'>Section 1: Assessment&nbsp;basics</h2>
-                        <p className='small'>Complete all fields.</p>
+                        <h2 className="text-blue">Section 1: Assessment&nbsp;basics</h2>
+                        <p className="small">Complete all fields.</p>
                     </div>
-                    <div className='form__fields'>
-                        <div className='form__fields--row'>
-                            <FieldDate id='q1' label='Date of assessment' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                    <div className="form__fields">
+                        <div className="form__fields--row">
+                            <FieldDate id="q1" label="Date of assessment" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
                         </div>
-                        <div className='form__fields--row'>
-                            <FieldText id='q2' label='Member’s chosen name, gender, and/or&nbsp;pronouns' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
-                        </div>
-                        <div className='form__fields--row'>
-                            <FieldText id='q3' label='Name of person completing assessment' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
-                        </div>
-                        <div className='form__fields--row'>
-                            <FieldText id='q4' label='Phone number of person completing assessment' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
-                            <FieldEmail id='q5' label='Email of person completing assessment' onChange={handleChange} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
-                        </div>
-                        <div className='form__fields--row'>
-                            <FieldSelect
-                                id='q6'
-                                label='Relationship of the person completing this assessment to the YouthCare member'
-                                options={["Biological parent", "Foster parent", "Adoptive parent/legal guardian", "Caseworker", "Caseworker supervisor", "Facility/residential contact", "Self/member", "Other"]}
-                                subCond='Other'
-                                subLabel='If “Other” please describe'
-                                onChange={handleChange}
+                        <div className="form__fields--row">
+                            <FieldText
+                                id="q2"
+                                label="Member’s chosen name, gender, and/or&nbsp;pronouns"
+                                onChange={store}
                                 onAddValidator={addValidator}
                                 onRemoveValidator={removeValidator}
                             />
                         </div>
-                        <div className='form__fields--row'>
+                        <div className="form__fields--row">
+                            <FieldText id="q3" label="Name of person completing assessment" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                        </div>
+                        <div className="form__fields--row">
+                            <FieldText
+                                id="q4"
+                                label="Phone number of person completing assessment"
+                                onChange={store}
+                                onAddValidator={addValidator}
+                                onRemoveValidator={removeValidator}
+                            />
+                            <FieldEmail id="q5" label="Email of person completing assessment" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                        </div>
+                        <div className="form__fields--row">
                             <FieldSelect
-                                id='q7'
-                                label='Youth placement at time of assessment'
+                                id="q6"
+                                label="Relationship of the person completing this assessment to the YouthCare member"
+                                options={[
+                                    "Biological parent",
+                                    "Foster parent",
+                                    "Adoptive parent/legal guardian",
+                                    "Caseworker",
+                                    "Caseworker supervisor",
+                                    "Facility/residential contact",
+                                    "Self/member",
+                                    "Other",
+                                ]}
+                                subCond="Other"
+                                subLabel="If “Other” please describe"
+                                onChange={store}
+                                onAddValidator={addValidator}
+                                onRemoveValidator={removeValidator}
+                            />
+                        </div>
+                        <div className="form__fields--row">
+                            <FieldSelect
+                                id="q7"
+                                label="Youth placement at time of assessment"
                                 options={[
                                     "Foster home",
                                     "Hospital",
@@ -100,17 +95,17 @@ export default function View1({ handleNext }) {
                                     "Independent living placement",
                                     "Other",
                                 ]}
-                                subCond='Other'
-                                subLabel='If “Other” please describe'
-                                onChange={handleChange}
+                                subCond="Other"
+                                subLabel="If “Other” please describe"
+                                onChange={store}
                                 onAddValidator={addValidator}
                                 onRemoveValidator={removeValidator}
                             />
                         </div>
-                        <div className='form__fields--row'>
+                        <div className="form__fields--row">
                             <FieldSelect
-                                id='q8'
-                                label='DCFS permanency goal'
+                                id="q8"
+                                label="DCFS permanency goal"
                                 options={[
                                     "Return home",
                                     "Substitute/foster care pending Termination of Parental Rights (TPR)",
@@ -124,17 +119,17 @@ export default function View1({ handleNext }) {
                                     "N/A; FYIC (former youth in care)",
                                     "Adoption/guardianship subsidy end date",
                                 ]}
-                                subCond='Adoption/guardianship subsidy end date'
-                                subLabel='Please specify end date'
-                                subType='date'
-                                onChange={handleChange}
+                                subCond="Adoption/guardianship subsidy end date"
+                                subLabel="Please specify end date"
+                                subType="date"
+                                onChange={store}
                                 onAddValidator={addValidator}
                                 onRemoveValidator={removeValidator}
                             />
                         </div>
                     </div>
-                    <div className='form__footer'>
-                        <button className='button button--next' onClick={handleValidation}>
+                    <div className="form__footer">
+                        <button className="button button--next" onClick={() => validate(handleNext)}>
                             Next
                         </button>
                     </div>
