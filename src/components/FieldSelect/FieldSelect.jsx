@@ -1,12 +1,26 @@
 import { useEffect, useRef, useState } from "react";
+import { useStorage } from "../../hooks";
+
 import FieldDate from "../FieldDate/FieldDate";
 import FieldText from "../FieldText/FieldText";
 
 export default function FieldSelect({ id, label, options, subCond, subLabel, subType, onChange, onAddValidator, onRemoveValidator }) {
     const select = useRef();
     const [showSub, setShowSub] = useState(false);
+    const [store, getStored] = useStorage("answers");
 
     useEffect(() => {
+        const storedAnswer = getStored(id);
+
+        if (storedAnswer) {
+            select.current.value = storedAnswer;
+
+            if (storedAnswer === subCond) setShowSub(true);
+        } else {
+            store(id, null);
+            if (subCond) store(`${id}sub`, null);
+        }
+
         const answers = localStorage.getItem("answers");
         const parsed = JSON.parse(answers);
         if (parsed) {
@@ -26,10 +40,8 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
 
     function handleBlur({ target }) {
         target.style.border = "1px solid #414042";
-        target.style.outline = "none";
 
         if (target.value === "Select") {
-            target.style.outline = "2px solid red";
             target.style.border = "1px solid red";
         }
     }
@@ -67,7 +79,6 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
     function validator() {
         if (select.current.value === "Select") {
             select.current.style.border = "1px solid red";
-            select.current.style.outline = "2px solid red";
 
             return false;
         }
@@ -77,12 +88,12 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
 
     return (
         <>
-            <div className='field custom-select'>
-                <label htmlFor={id} className='small bold'>
+            <div className="field custom-select">
+                <label htmlFor={id} className="small bold">
                     {label ? label : "Label placeholder"}
                 </label>
                 <select ref={select} name={id} id={id} onChange={handleChange} onBlur={handleBlur}>
-                    <option value='Select'>Select</option>
+                    <option value="Select">Select</option>
                     {options
                         ? options.map((option, index) => {
                               return (
@@ -94,7 +105,7 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
                         : null}
                 </select>
             </div>
-            {showSub ? displaySub() : null}
+            {showSub && subCond ? displaySub() : null}
         </>
     );
 }

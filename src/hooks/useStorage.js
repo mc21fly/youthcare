@@ -7,10 +7,15 @@ export default function useStorage(name) {
         localStorage.setItem(name, JSON.stringify(parsed));
     }
 
-    function getStored() {
+    function getStored(key) {
         const items = localStorage.getItem(name);
+        const parsed = JSON.parse(items);
 
-        return JSON.parse(items);
+        if (parsed && key) {
+            return parsed[key];
+        }
+
+        return parsed;
     }
 
     return [store, getStored];
