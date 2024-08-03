@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldTextarea({ id, label, onChange, onAddValidator, onRemoveValidator }) {
+export default function FieldTextarea({ id, label, validator }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
@@ -9,10 +9,10 @@ export default function FieldTextarea({ id, label, onChange, onAddValidator, onR
         const storedAnswer = getStored(id);
         storedAnswer ? (input.current.value = storedAnswer) : store(id, null);
 
-        if (onAddValidator) onAddValidator(id, validator);
+        if (validator) validator.addValidation(id, validate);
 
         return () => {
-            if (onRemoveValidator) onRemoveValidator(id);
+            if (validator) validator.removeValidation(id);
         };
     }, []);
 
@@ -21,10 +21,10 @@ export default function FieldTextarea({ id, label, onChange, onAddValidator, onR
     }
 
     function handleChange({ target }) {
-        onChange(id, target.value !== "" ? target.value : null);
+        store(id, target.value !== "" ? target.value : null);
     }
 
-    function validator() {
+    function validate() {
         if (input.current.value === "") {
             input.current.style.border = "1px solid red";
             return false;

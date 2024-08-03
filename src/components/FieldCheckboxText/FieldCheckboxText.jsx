@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldCheckboxText({ id, label, onChange, onAddValidator, onRemoveValidator }) {
+export default function FieldCheckboxText({ id, label, validator }) {
     const input = useRef();
     const checkbox = useRef();
     const [store, getStored] = useStorage("answers");
@@ -19,30 +19,30 @@ export default function FieldCheckboxText({ id, label, onChange, onAddValidator,
             store(`${id}sub`, "");
         }
 
-        if (onAddValidator) onAddValidator(id, validator);
+        if (validator) validator.addValidation(id, validate);
 
         return () => {
-            if (onRemoveValidator) onRemoveValidator(id);
+            if (validator) validator.removeValidation(id);
         };
     }, []);
 
     function handleChange({ target }) {
-        onChange(id, target.checked);
+        store(id, target.checked);
         input.current.disabled = !target.checked;
         input.current.style.border = "1px solid #414042";
 
-        if (!target.checked) onChange(`${id}sub`, "");
+        if (!target.checked) store(`${id}sub`, "");
     }
 
     function handleInput({ target }) {
-        onChange(`${id}sub`, target.value !== "" ? target.value : null);
+        store(`${id}sub`, target.value !== "" ? target.value : null);
     }
 
     function handleBlur({ target }) {
         target.style.border = "1px solid #414042";
     }
 
-    function validator() {
+    function validate() {
         if (checkbox.current.checked && input.current.value === "") {
             input.current.style.border = "1px solid red";
             return false;

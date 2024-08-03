@@ -3,11 +3,11 @@ import { useState } from "react";
 export default function useValidation() {
     const [validators, setValidators] = useState([]);
 
-    function addValidator(id, validator) {
+    function addValidation(id, validator) {
         setValidators((prev) => [...prev, { id, validator }]);
     }
 
-    function removeValidator(id) {
+    function removeValidation(id) {
         setValidators((prev) => [...prev.filter((validator) => validator.id !== id)]);
     }
 
@@ -19,5 +19,5 @@ export default function useValidation() {
         if (!result.includes(false)) callback();
     }
 
-    return [validate, addValidator, removeValidator];
+    return [validate, { addValidation, removeValidation }];
 }

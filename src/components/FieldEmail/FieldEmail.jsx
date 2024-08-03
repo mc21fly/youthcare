@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldEmail({ id, label, onChange, onAddValidator, onRemoveValidator }) {
+export default function FieldEmail({ id, label, validator }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
@@ -9,20 +9,20 @@ export default function FieldEmail({ id, label, onChange, onAddValidator, onRemo
         const storedAnswer = getStored(id);
         storedAnswer ? (input.current.value = storedAnswer) : store(id, null);
 
-        if (onAddValidator) onAddValidator(id, validator);
+        if (validator) validator.addValidation(id, validate);
 
         return () => {
-            if (onRemoveValidator) onRemoveValidator(id);
+            if (validator) validator.removeValidation(id);
         };
     }, []);
 
     function handleChange({ target }) {
         if (target.value !== "" && !isValidEmail(target.value)) {
-            onChange(id, null);
+            store(id, null);
         } else if (target.value === "") {
-            onChange(id, null);
+            store(id, null);
         } else {
-            onChange(id, target.value);
+            store(id, target.value);
         }
     }
 
@@ -40,7 +40,7 @@ export default function FieldEmail({ id, label, onChange, onAddValidator, onRemo
         );
     }
 
-    function validator() {
+    function validate() {
         if (!isValidEmail(input.current.value) || input.current.value === "") {
             input.current.style.border = "1px solid red";
             return false;

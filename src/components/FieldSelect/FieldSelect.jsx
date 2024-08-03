@@ -4,7 +4,7 @@ import { useStorage } from "../../hooks";
 import FieldDate from "../FieldDate/FieldDate";
 import FieldText from "../FieldText/FieldText";
 
-export default function FieldSelect({ id, label, options, subCond, subLabel, subType, onChange, onAddValidator, onRemoveValidator }) {
+export default function FieldSelect({ id, label, options, subCond, subLabel, subType, validator }) {
     const select = useRef();
     const [showSub, setShowSub] = useState(false);
     const [store, getStored] = useStorage("answers");
@@ -31,10 +31,10 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
             }
         }
 
-        if (onAddValidator) onAddValidator(id, validator);
+        if (validator) validator.addValidation(id, validate);
 
         return () => {
-            if (onRemoveValidator) onRemoveValidator(id);
+            if (validator) validator.removeValidation(id);
         };
     }, []);
 
@@ -52,20 +52,18 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
                 setShowSub(true);
             } else {
                 setShowSub(false);
-                onChange(`${id}sub`, "");
+                store(`${id}sub`, "");
             }
         }
 
-        onChange(id, target.value);
+        store(id, target.value);
     }
 
     function displaySub() {
         const props = {
             id: `${id}sub`,
             label: subLabel ? subLabel : "Sub-label placeholder",
-            onChange: onChange,
-            onAddValidator: onAddValidator,
-            onRemoveValidator: onRemoveValidator,
+            validator: validator,
         };
 
         switch (subType) {
@@ -76,7 +74,7 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
         }
     }
 
-    function validator() {
+    function validate() {
         if (select.current.value === "Select") {
             select.current.style.border = "1px solid red";
 

@@ -1,9 +1,8 @@
 import { FieldText, FieldSelect, FieldEmail, FieldDate } from "../components";
-import { useStorage, useValidation } from "../hooks";
+import { useValidation } from "../hooks";
 
 export default function View1({ handleNext }) {
-    const [validate, addValidator, removeValidator] = useValidation();
-    const [store] = useStorage("answers");
+    const [validate, Validator] = useValidation();
 
     return (
         <>
@@ -33,29 +32,17 @@ export default function View1({ handleNext }) {
                     </div>
                     <div className="form__fields">
                         <div className="form__fields--row">
-                            <FieldDate id="q1" label="Date of assessment" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldDate id="q1" label="Date of assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText
-                                id="q2"
-                                label="Member’s chosen name, gender, and/or&nbsp;pronouns"
-                                onChange={store}
-                                onAddValidator={addValidator}
-                                onRemoveValidator={removeValidator}
-                            />
+                            <FieldText id="q2" label="Member’s chosen name, gender, and/or&nbsp;pronouns" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText id="q3" label="Name of person completing assessment" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldText id="q3" label="Name of person completing assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText
-                                id="q4"
-                                label="Phone number of person completing assessment"
-                                onChange={store}
-                                onAddValidator={addValidator}
-                                onRemoveValidator={removeValidator}
-                            />
-                            <FieldEmail id="q5" label="Email of person completing assessment" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldText id="q4" label="Phone number of person completing assessment" validator={Validator} />
+                            <FieldEmail id="q5" label="Email of person completing assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
                             <FieldSelect
@@ -73,9 +60,7 @@ export default function View1({ handleNext }) {
                                 ]}
                                 subCond="Other"
                                 subLabel="If “Other” please describe"
-                                onChange={store}
-                                onAddValidator={addValidator}
-                                onRemoveValidator={removeValidator}
+                                validator={Validator}
                             />
                         </div>
                         <div className="form__fields--row">
@@ -97,9 +82,7 @@ export default function View1({ handleNext }) {
                                 ]}
                                 subCond="Other"
                                 subLabel="If “Other” please describe"
-                                onChange={store}
-                                onAddValidator={addValidator}
-                                onRemoveValidator={removeValidator}
+                                validator={Validator}
                             />
                         </div>
                         <div className="form__fields--row">
@@ -122,9 +105,7 @@ export default function View1({ handleNext }) {
                                 subCond="Adoption/guardianship subsidy end date"
                                 subLabel="Please specify end date"
                                 subType="date"
-                                onChange={store}
-                                onAddValidator={addValidator}
-                                onRemoveValidator={removeValidator}
+                                validator={Validator}
                             />
                         </div>
                     </div>

@@ -1,9 +1,8 @@
 import { FieldTextarea, FieldCheckbox, FieldCheckboxText } from "../components";
-import { useStorage, useValidation } from "../hooks";
+import { useValidation } from "../hooks";
 
 export default function View3({ handleNext, handlePrev }) {
-    const [validate, addValidator, removeValidator] = useValidation();
-    const [store] = useStorage("answers");
+    const [validate, Validator] = useValidation();
 
     return (
         <>
@@ -23,19 +22,19 @@ export default function View3({ handleNext, handlePrev }) {
                         </div>
                         <div className="form__fields--row checkbox no-input">
                             <div className="field">
-                                <FieldCheckbox id="q40" label="Food" onChange={store} />
-                                <FieldCheckbox id="q41" label="Clothing" onChange={store} />
-                                <FieldCheckbox id="q42" label="Housing" onChange={store} />
-                                <FieldCheckbox id="q43" label="Transportation" onChange={store} />
-                                <FieldCheckbox id="q44" label="Education" onChange={store} />
-                                <FieldCheckbox id="q45" label="Employment" onChange={store} />
-                                <FieldCheckbox id="q46" label="Literacy" onChange={store} />
+                                <FieldCheckbox id="q40" label="Food" />
+                                <FieldCheckbox id="q41" label="Clothing" />
+                                <FieldCheckbox id="q42" label="Housing" />
+                                <FieldCheckbox id="q43" label="Transportation" />
+                                <FieldCheckbox id="q44" label="Education" />
+                                <FieldCheckbox id="q45" label="Employment" />
+                                <FieldCheckbox id="q46" label="Literacy" />
                             </div>
                             <div className="field">
-                                <FieldCheckbox id="q47" label="Social supports" onChange={store} />
-                                <FieldCheckbox id="q48" label="Access to healthcare" onChange={store} />
-                                <FieldCheckboxText id="q49" label="Other:" onChange={store} />
-                                <FieldCheckbox id="q50" label="No SDOH needs reported" onChange={store} />
+                                <FieldCheckbox id="q47" label="Social supports" />
+                                <FieldCheckbox id="q48" label="Access to healthcare" />
+                                <FieldCheckboxText id="q49" label="Other:" />
+                                <FieldCheckbox id="q50" label="No SDOH needs reported" />
                             </div>
                         </div>
                         <div className="form__fields--row no-input">
@@ -50,16 +49,10 @@ export default function View3({ handleNext, handlePrev }) {
                             </div>
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea
-                                id="q51"
-                                label="Special educational services received"
-                                onChange={store}
-                                onAddValidator={addValidator}
-                                onRemoveValidator={removeValidator}
-                            />
+                            <FieldTextarea id="q51" label="Special educational services received" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea id="q52" label="Additional notes" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldTextarea id="q52" label="Additional notes" validator={Validator} />
                         </div>
                     </div>
                     <div className="form__footer">

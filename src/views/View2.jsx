@@ -1,9 +1,8 @@
 import { FieldText, FieldDate, FieldTextarea, FieldCheckbox, FieldCheckboxText } from "../components";
-import { useStorage, useValidation } from "../hooks";
+import { useValidation } from "../hooks";
 
 export default function View2({ handleNext, handlePrev }) {
-    const [validate, addValidator, removeValidator] = useValidation();
-    const [store] = useStorage("answers");
+    const [validate, Validator] = useValidation();
 
     return (
         <>
@@ -16,16 +15,16 @@ export default function View2({ handleNext, handlePrev }) {
                     </div>
                     <div className="form__fields">
                         <div className="form__fields--row">
-                            <FieldText id="q9" label="Primary care physician" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
-                            <FieldDate id="q10" label="Date of last visit" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldText id="q9" label="Primary care physician" validator={Validator} />
+                            <FieldDate id="q10" label="Date of last visit" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText id="q11" label="Dental provider" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
-                            <FieldDate id="q12" label="Date of last visit" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldText id="q11" label="Dental provider" validator={Validator} />
+                            <FieldDate id="q12" label="Date of last visit" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea id="q13" label="List of member’s medications" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
-                            <FieldTextarea id="q14" label="Additional treatments or services" onChange={store} onAddValidator={addValidator} onRemoveValidator={removeValidator} />
+                            <FieldTextarea id="q13" label="List of member’s medications" validator={Validator} />
+                            <FieldTextarea id="q14" label="Additional treatments or services" validator={Validator} />
                         </div>
                         <div className="form__fields--row no-input">
                             <div className="field">
@@ -38,44 +37,37 @@ export default function View2({ handleNext, handlePrev }) {
                         </div>
                         <div className="form__fields--row checkbox">
                             <div className="field">
-                                <FieldCheckbox id="q15" label="Heart condition/high blood pressure" onChange={store} />
-                                <FieldCheckbox id="q16" label="Asthma" onChange={store} />
-                                <FieldCheckbox id="q17" label="Seizure/epilepsy" onChange={store} />
-                                <FieldCheckbox id="q18" label="Failure to thrive" onChange={store} />
+                                <FieldCheckbox id="q15" label="Heart condition/high blood pressure" />
+                                <FieldCheckbox id="q16" label="Asthma" />
+                                <FieldCheckbox id="q17" label="Seizure/epilepsy" />
+                                <FieldCheckbox id="q18" label="Failure to thrive" />
                                 <FieldCheckbox
                                     id="q19"
                                     label={`Central nervous system/traumatic \n
                                         brain injury/shaken baby`}
-                                    onChange={store}
                                 />
-                                <FieldCheckbox id="q20" label="Broken bones" onChange={store} />
-                                <FieldCheckbox id="q21" label="Internal injuries" onChange={store} />
-                                <FieldCheckbox id="q22" label="Diabetes" onChange={store} />
-                                <FieldCheckbox id="q23" label="Hemophilia" onChange={store} />
-                                <FieldCheckbox id="q24" label="Sickle cell disease" onChange={store} />
-                                <FieldCheckbox id="q25" label="Cancer" onChange={store} />
-                                <FieldCheckbox id="q26" label={`Cerebral palsy/muscular dystrophy/\nmultiple sclerosis/paralysis`} onChange={store} />
-                                <FieldCheckbox id="q27" label="Cystic fibrosis" onChange={store} />
+                                <FieldCheckbox id="q20" label="Broken bones" />
+                                <FieldCheckbox id="q21" label="Internal injuries" />
+                                <FieldCheckbox id="q22" label="Diabetes" />
+                                <FieldCheckbox id="q23" label="Hemophilia" />
+                                <FieldCheckbox id="q24" label="Sickle cell disease" />
+                                <FieldCheckbox id="q25" label="Cancer" />
+                                <FieldCheckbox id="q26" label={`Cerebral palsy/muscular dystrophy/\nmultiple sclerosis/paralysis`} />
+                                <FieldCheckbox id="q27" label="Cystic fibrosis" />
                             </div>
                             <div className="field">
-                                <FieldCheckbox id="q28" label="Serious burns that require wound care or surgery" onChange={store} />
-                                <FieldCheckbox id="q29" label="IV antibiotics" onChange={store} />
-                                <FieldCheckbox id="q30" label="HIV-positive/AIDS" onChange={store} />
-                                <FieldCheckbox id="q31" label="Transplant or transplant candidate" onChange={store} />
-                                <FieldCheckbox id="q32" label="Hospitalization (within the last 30 days)" onChange={store} />
-                                <FieldCheckbox id="q33" label="Pregnancy" onChange={store} />
-                                <FieldCheckbox id="q34" label="Private duty nursing/skilled nursing visits" onChange={store} />
-                                <FieldCheckbox id="q35" label="Personal care services" onChange={store} />
-                                <FieldCheckbox id="q36" label={`Home medical equipment/Durable Medical Equipment (DME) need identified`} onChange={store} />
-                                <FieldCheckbox id="q37" label="Hearing or vision loss (excluding eyeglasses)" onChange={store} />
-                                <FieldCheckbox id="q38" label="Osteogenesis imperfecta (brittle bone disease)" onChange={store} />
-                                <FieldCheckboxText
-                                    id="q39"
-                                    label="Any conditions not listed above:"
-                                    onChange={store}
-                                    onAddValidator={addValidator}
-                                    onRemoveValidator={removeValidator}
-                                />
+                                <FieldCheckbox id="q28" label="Serious burns that require wound care or surgery" />
+                                <FieldCheckbox id="q29" label="IV antibiotics" />
+                                <FieldCheckbox id="q30" label="HIV-positive/AIDS" />
+                                <FieldCheckbox id="q31" label="Transplant or transplant candidate" />
+                                <FieldCheckbox id="q32" label="Hospitalization (within the last 30 days)" />
+                                <FieldCheckbox id="q33" label="Pregnancy" />
+                                <FieldCheckbox id="q34" label="Private duty nursing/skilled nursing visits" />
+                                <FieldCheckbox id="q35" label="Personal care services" />
+                                <FieldCheckbox id="q36" label={`Home medical equipment/Durable Medical Equipment (DME) need identified`} />
+                                <FieldCheckbox id="q37" label="Hearing or vision loss (excluding eyeglasses)" />
+                                <FieldCheckbox id="q38" label="Osteogenesis imperfecta (brittle bone disease)" />
+                                <FieldCheckboxText id="q39" label="Any conditions not listed above:" validator={Validator} />
                             </div>
                         </div>
                     </div>
