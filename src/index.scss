@@ -313,6 +313,10 @@ label:has(+ .sub-label) {
         display: none;
     }
 
+    .form__footer {
+        padding-bottom: 50px;
+    }
+
     .mbl-show {
         display: block !important;
     }
@@ -322,7 +326,7 @@ label:has(+ .sub-label) {
     }
 
     .padding {
-        padding: 0 15px 60px;
+        padding: 0 15px 20px;
     }
 
     footer {
@@ -343,6 +347,10 @@ label:has(+ .sub-label) {
 
     h2 {
         font-size: 32px;
+    }
+
+    .checkbox {
+        gap: 0;
     }
 }
 
