@@ -25,7 +25,7 @@ export default function FieldTextarea({ id, label, validator }) {
     }
 
     function validate() {
-        if (input.current.value === "") {
+        if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,]*$/g)) {
             input.current.style.border = "1px solid red";
             return false;
         }

@@ -11,13 +11,28 @@ export default function useValidation() {
         setValidators((prev) => [...prev.filter((validator) => validator.id !== id)]);
     }
 
-    function validate(callback) {
-        const result = validators.map(({ validator }) => {
-            return validator();
+    function _validate(callback) {
+        let firstInvalid = null;
+
+        const result = validators.map(({ id, validator }) => {
+            const isValid = validator();
+
+            if (!firstInvalid && !isValid) firstInvalid = id;
+
+            return isValid;
         });
+
+        if (firstInvalid) {
+            const element = document.querySelector(`#${firstInvalid}`);
+            const y = element.getBoundingClientRect().top + window.scrollY;
+
+            window.scroll({
+                top: y - 100,
+            });
+        }
 
         if (!result.includes(false)) callback();
     }
 
-    return [validate, { addValidation, removeValidation }];
+    return [_validate, { addValidation, removeValidation }];
 }
