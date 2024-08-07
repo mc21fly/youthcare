@@ -19,9 +19,14 @@ export default function FieldRadio({ id, options, validator }) {
         };
     }, []);
 
-    function handleChange({ target }) {
-        store(id, target.value);
-        setChecked(target.value);
+    function handleClick({ target }) {
+        if (checked === target.value) {
+            store(id, "");
+            setChecked(null);
+        } else {
+            store(id, target.value);
+            setChecked(target.value);
+        }
     }
 
     function validate() {
@@ -32,7 +37,7 @@ export default function FieldRadio({ id, options, validator }) {
         ? options.map((option, index) => {
               return (
                   <div key={index} className="field__radio">
-                      <input ref={input} type="radio" name={id} id={`${id}_${index}`} onChange={handleChange} value={option} checked={option === checked ? true : false} />
+                      <input ref={input} type="radio" name={id} id={`${id}_${index}`} onClick={handleClick} value={option} checked={option === checked ? true : false} readOnly />
                       <label htmlFor={`${id}_${index}`}>{option}</label>
                   </div>
               );
