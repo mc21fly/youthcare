@@ -122,6 +122,23 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
+input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    font: inherit;
+    width: 23px;
+    height: 23px;
+    min-width: 23px;
+    border-radius: 1px;
+    border: 1px solid #414042;
+    padding: 0;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+}
+
 .field__checkbox {
     display: flex;
     align-items: baseline;
@@ -129,6 +146,11 @@ input[type="checkbox"] {
 }
 
 .field__checkbox > label {
+    margin: 0;
+    margin-left: 8px;
+}
+
+.field__radio > label {
     margin: 0;
     margin-left: 8px;
 }
@@ -195,6 +217,24 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.field__radio {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 15px;
+}
+
+input[type="radio"]::before {
+    content: "";
+    width: 13px;
+    height: 13px;
+    transform: scale(0);
+    background-color: #009978;
+}
+
+input[type="radio"]:checked::before {
+    transform: scale(1);
 }
 
 .custom-select {

@@ -1,4 +1,5 @@
 import { FieldText, FieldDate, FieldTextarea, FieldCheckbox, FieldCheckboxText } from "../components";
+import FieldRadio from "../components/FieldRadio/FieldRadio";
 import { useValidation } from "../hooks";
 
 export default function View2({ handleNext, handlePrev }) {
@@ -117,21 +118,31 @@ export default function View2({ handleNext, handlePrev }) {
                                 <div className="field">
                                     <label className="small bold">COVID-19 vaccination</label>
                                 </div>
-                                <FieldCheckbox id="q60" label="Member has received vaccination" />
-                                <FieldCheckbox id="q61" label="Member/caregiver is interested in receiving vaccination information" />
-                                <FieldCheckbox id="q62" label="Member is planning to be vaccinated" />
-                                <FieldCheckbox id="q63" label="Member does not plan to be vaccinated" />
-                                <FieldCheckbox id="q64" label="Member vaccination status is unknown" />
+                                <FieldRadio
+                                    id="q60"
+                                    options={[
+                                        "Member has received vaccination",
+                                        "Member/caregiver is interested in receiving vaccination information",
+                                        "Member is planning to be vaccinated",
+                                        "Member does not plan to be vaccinated",
+                                        "Member vaccination status is unknown",
+                                    ]}
+                                />
                             </div>
                             <div className="field">
                                 <div className="field">
                                     <label className="small bold">Annual flu shot</label>
                                 </div>
-                                <FieldCheckbox id="q65" label="Member has received vaccination" />
-                                <FieldCheckbox id="q66" label="Member/caregiver is interested in receiving vaccination information" />
-                                <FieldCheckbox id="q67" label="Member is planning to be vaccinated" />
-                                <FieldCheckbox id="q68" label="Member does not plan to be vaccinated" />
-                                <FieldCheckbox id="q69" label="Member vaccination status is unknown" />
+                                <FieldRadio
+                                    id="q61"
+                                    options={[
+                                        "Member has received vaccination",
+                                        "Member/caregiver is interested in receiving vaccination information",
+                                        "Member is planning to be vaccinated",
+                                        "Member does not plan to be vaccinated",
+                                        "Member vaccination status is unknown",
+                                    ]}
+                                />
                             </div>
                         </div>
                         <div className="form__fields--row">
@@ -140,7 +151,7 @@ export default function View2({ handleNext, handlePrev }) {
                             </div>
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea id="q70" label="Additional notes" validator={Validator} />
+                            <FieldTextarea id="q62" label="Additional notes" validator={Validator} />
                         </div>
                     </div>
 
