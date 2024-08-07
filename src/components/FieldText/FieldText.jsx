@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldText({ id, label, validator }) {
+export default function FieldText({ id, label, validator, numbers }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
@@ -25,9 +25,16 @@ export default function FieldText({ id, label, validator }) {
     }
 
     function validate() {
-        if (input.current.value === "") {
-            input.current.style.border = "1px solid red";
-            return false;
+        if (numbers) {
+            if (input.current.value === "" || !input.current.value.match(/^(\+|)[0-9\-\(\)]*$/g)) {
+                input.current.style.border = "1px solid red";
+                return false;
+            }
+        } else {
+            if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z0-9\s]*$/g)) {
+                input.current.style.border = "1px solid red";
+                return false;
+            }
         }
 
         return true;

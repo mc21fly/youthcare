@@ -22,19 +22,19 @@ export default function View3({ handleNext, handlePrev }) {
                         </div>
                         <div className="form__fields--row checkbox no-input">
                             <div className="field">
-                                <FieldCheckbox id="q40" label="Food" />
-                                <FieldCheckbox id="q41" label="Clothing" />
-                                <FieldCheckbox id="q42" label="Housing" />
-                                <FieldCheckbox id="q43" label="Transportation" />
-                                <FieldCheckbox id="q44" label="Education" />
-                                <FieldCheckbox id="q45" label="Employment" />
-                                <FieldCheckbox id="q46" label="Literacy" />
+                                <FieldCheckbox id="q71" label="Food" />
+                                <FieldCheckbox id="q72" label="Clothing" />
+                                <FieldCheckbox id="q73" label="Housing" />
+                                <FieldCheckbox id="q74" label="Transportation" />
+                                <FieldCheckbox id="q75" label="Education" />
+                                <FieldCheckbox id="q76" label="Employment" />
+                                <FieldCheckbox id="q77" label="Literacy" />
                             </div>
                             <div className="field">
-                                <FieldCheckbox id="q47" label="Social supports" />
-                                <FieldCheckbox id="q48" label="Access to healthcare" />
-                                <FieldCheckboxText id="q49" label="Other:" />
-                                <FieldCheckbox id="q50" label="No SDOH needs reported" />
+                                <FieldCheckbox id="q78" label="Social supports" />
+                                <FieldCheckbox id="q79" label="Access to healthcare" />
+                                <FieldCheckboxText id="q80" label="Other:" />
+                                <FieldCheckbox id="q81" label="No SDOH needs reported" />
                             </div>
                         </div>
                         <div className="form__fields--row no-input">
@@ -49,10 +49,10 @@ export default function View3({ handleNext, handlePrev }) {
                             </div>
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea id="q51" label="Special educational services received" validator={Validator} />
+                            <FieldTextarea id="q82" label="Special educational services received" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea id="q52" label="Additional notes" validator={Validator} />
+                            <FieldTextarea id="q83" label="Additional notes" validator={Validator} />
                         </div>
                     </div>
                     <div className="form__footer">

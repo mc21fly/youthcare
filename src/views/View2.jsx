@@ -70,7 +70,80 @@ export default function View2({ handleNext, handlePrev }) {
                                 <FieldCheckboxText id="q39" label="Any conditions not listed above:" validator={Validator} />
                             </div>
                         </div>
+                        <div className="form__fields--row no-input">
+                            <div className="field">
+                                <label className="small bold">Mental health</label>
+                                <p className="sub-label">
+                                    Within the last 12 months, has the member received treatment for, or experienced symptoms related to, any of the following conditions or needs
+                                    or demonstrated any of the following behaviors? Check all that apply.
+                                </p>
+                            </div>
+                        </div>
+                        <div className="form__fields--row checkbox">
+                            <div className="field">
+                                <FieldCheckbox id="q40" label="Self-injurious behavior" />
+                                <FieldCheckbox id="q41" label="Behavior with the intent to harm others" />
+                                <FieldCheckbox id="q42" label="Fire-setting behavior" />
+                                <FieldCheckbox id="q43" label="Intentional harm to animals" />
+                                <FieldCheckbox id="q44" label="Suicide attempt" />
+                                <FieldCheckbox id="q45" label="Psychiatric hospitalization" />
+                                <FieldCheckbox id="q46" label="Elopement or truancy" />
+                                <FieldCheckbox id="q47" label="Post-traumatic stress" />
+                                <FieldCheckbox id="q48" label="Gender identity and/or LGBTQ+ support/resources needed" />
+                                <FieldCheckbox id="q49" label="Autism spectrum disorder" />
+                                <FieldCheckbox id="q50" label="Intellectual or developmental disability or delay" />
+                            </div>
+                            <div className="field">
+                                <FieldCheckbox id="q51" label="ADHD/ADD" />
+                                <FieldCheckbox id="q52" label="Schizophrenia/schizoaffective disorder" />
+                                <FieldCheckbox id="q53" label="Depression/bipolar/affective dysregulation" />
+                                <FieldCheckbox id="q54" label="Anxiety" />
+                                <FieldCheckbox id="q55" label="Substance use or abuse" />
+                                <FieldCheckbox id="q56" label="Substance-exposed infant" />
+                                <FieldCheckbox id="q57" label="Sexually reactive behavior" />
+                                <FieldCheckbox id="q58" label="Victim of human trafficking" />
+                                <FieldCheckboxText id="q59" label="Any conditions not listed above:" validator={Validator} />
+                            </div>
+                        </div>
+                        <div className="form__fields--row no-input">
+                            <div className="field">
+                                <label className="small bold" style={{ margin: 0 }}>
+                                    Vaccinations
+                                </label>
+                            </div>
+                        </div>
+                        <div className="form__fields--row checkbox" style={{ marginBottom: 27 }}>
+                            <div className="field">
+                                <div className="field">
+                                    <label className="small bold">COVID-19 vaccination</label>
+                                </div>
+                                <FieldCheckbox id="q60" label="Member has received vaccination" />
+                                <FieldCheckbox id="q61" label="Member/caregiver is interested in receiving vaccination information" />
+                                <FieldCheckbox id="q62" label="Member is planning to be vaccinated" />
+                                <FieldCheckbox id="q63" label="Member does not plan to be vaccinated" />
+                                <FieldCheckbox id="q64" label="Member vaccination status is unknown" />
+                            </div>
+                            <div className="field">
+                                <div className="field">
+                                    <label className="small bold">Annual flu shot</label>
+                                </div>
+                                <FieldCheckbox id="q65" label="Member has received vaccination" />
+                                <FieldCheckbox id="q66" label="Member/caregiver is interested in receiving vaccination information" />
+                                <FieldCheckbox id="q67" label="Member is planning to be vaccinated" />
+                                <FieldCheckbox id="q68" label="Member does not plan to be vaccinated" />
+                                <FieldCheckbox id="q69" label="Member vaccination status is unknown" />
+                            </div>
+                        </div>
+                        <div className="form__fields--row">
+                            <div className="field">
+                                <i style={{ fontSize: 13 }}>* Vaccination questions apply to youth age 6 months and older</i>
+                            </div>
+                        </div>
+                        <div className="form__fields--row">
+                            <FieldTextarea id="q70" label="Additional notes" validator={Validator} />
+                        </div>
                     </div>
+
                     <div className="form__footer">
                         <button className="button button--prev" onClick={handlePrev}>
                             Previous

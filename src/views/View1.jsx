@@ -41,7 +41,7 @@ export default function View1({ handleNext }) {
                             <FieldText id="q3" label="Name of person completing assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText id="q4" label="Phone number of person completing assessment" validator={Validator} />
+                            <FieldText id="q4" label="Phone number of person completing assessment" validator={Validator} numbers={true} />
                             <FieldEmail id="q5" label="Email of person completing assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
@@ -104,7 +104,7 @@ export default function View1({ handleNext }) {
                                 ]}
                                 subCond="Adoption/guardianship subsidy end date"
                                 subLabel="Please specify end date"
-                                subType="date"
+                                subType="date-future"
                                 validator={Validator}
                             />
                         </div>

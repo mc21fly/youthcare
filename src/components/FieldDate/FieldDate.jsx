@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldDate({ id, label, validator }) {
+export default function FieldDate({ id, label, validator, future }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
@@ -38,10 +38,26 @@ export default function FieldDate({ id, label, validator }) {
         return date.match(/^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/g);
     }
 
+    function isFutureDate(date) {
+        const input = new Date(date);
+        const now = Date.now();
+
+        if (input < now) return false;
+
+        return true;
+    }
+
     function validate() {
         if (!isValidDate(input.current.value) || input.current.value === "") {
             input.current.style.border = "1px solid red";
             return false;
+        }
+
+        if (!future) {
+            if (isFutureDate(input.current.value)) {
+                input.current.style.border = "1px solid red";
+                return false;
+            }
         }
 
         return true;

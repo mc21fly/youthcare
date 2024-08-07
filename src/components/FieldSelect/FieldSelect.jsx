@@ -69,6 +69,8 @@ export default function FieldSelect({ id, label, options, subCond, subLabel, sub
         switch (subType) {
             case "date":
                 return <FieldDate {...props} />;
+            case "date-future":
+                return <FieldDate {...props} future={true} />;
             default:
                 return <FieldText {...props} />;
         }
