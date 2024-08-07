@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useEffect, useRef, useState } from "react";
 import { useStorage } from "../../hooks";
 
 export default function FieldRadio({ id, options, validator }) {
@@ -9,7 +9,9 @@ export default function FieldRadio({ id, options, validator }) {
     useLayoutEffect(() => {
         const storedAnswer = getStored(id);
         storedAnswer ? setChecked(storedAnswer) : store(id, "");
+    }, []);
 
+    useEffect(() => {
         if (validator) validator.addValidation(id, validate);
 
         return () => {
