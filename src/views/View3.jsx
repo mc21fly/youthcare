@@ -33,7 +33,7 @@ export default function View3({ handleNext, handlePrev }) {
                             <div className="field">
                                 <FieldCheckbox id="q70" label="Social supports" />
                                 <FieldCheckbox id="q71" label="Access to healthcare" />
-                                <FieldCheckboxText id="q72" label="Other:" />
+                                <FieldCheckboxText id="q72" label="Other:" validator={Validator} />
                                 <FieldCheckbox id="q73" label="No SDOH needs reported" />
                             </div>
                         </div>
