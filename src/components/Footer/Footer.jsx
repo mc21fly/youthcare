@@ -8,11 +8,17 @@ export default function Footer() {
                 </p>
                 <p>
                     &copy; 2024. All rights reserved.{" "}
-                    <a href="https://www.ilyouthcare.com/privacy-policy.html" target="_blank">
+                    <a
+                        href="https://www.ilmeridian.com/privacy-practices.html?utm_source=salesforce&utm_medium=email&utm_campaign=youthcare&utm_term=yc_fosterparents_members&utm_content=hrs"
+                        target="_blank"
+                    >
                         Privacy Policy
                     </a>
                     &nbsp;{" "}
-                    <a href="https://www.ilyouthcare.com/terms-conditions.html" target="_blank">
+                    <a
+                        href="https://www.ilmeridian.com/terms-conditions.html?utm_source=salesforce&utm_medium=email&utm_campaign=youthcare&utm_term=yc_fosterparents_members&utm_content=hrs"
+                        target="_blank"
+                    >
                         Terms and Conditions
                     </a>
                 </p>
