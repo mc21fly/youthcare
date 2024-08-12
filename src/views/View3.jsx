@@ -1,7 +1,7 @@
 import { FieldTextarea, FieldCheckbox, FieldCheckboxText } from "../components";
 import { useValidation } from "../hooks";
 
-export default function View3({ handleNext, handlePrev }) {
+export default function View3({ handleNext, handlePrev, sending }) {
     const [validate, Validator] = useValidation();
 
     return (
@@ -59,8 +59,8 @@ export default function View3({ handleNext, handlePrev }) {
                         <button className="button button--prev" onClick={handlePrev}>
                             Previous
                         </button>
-                        <button className="button button--next" onClick={() => validate(handleNext)}>
-                            Submit
+                        <button className="button button--next" onClick={() => validate(handleNext)} disabled={sending}>
+                            {sending ? "Sending..." : "Submit"}
                         </button>
                     </div>
                 </section>
