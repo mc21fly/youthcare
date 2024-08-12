@@ -53,7 +53,7 @@ export default function View2({ handleNext, handlePrev }) {
                                 <FieldCheckbox id="q23" label="Hemophilia" />
                                 <FieldCheckbox id="q24" label="Sickle cell disease" />
                                 <FieldCheckbox id="q25" label="Cancer" />
-                                <FieldCheckbox id="q26" label={`Cerebral palsy/muscular dystrophy/\nmultiple sclerosis/paralysis`} />
+                                <FieldCheckbox id="q26" label={`Cerebral palsy/muscular dystrophy/multiple sclerosis/paralysis`} />
                                 <FieldCheckbox id="q27" label="Cystic fibrosis" />
                             </div>
                             <div className="field">
