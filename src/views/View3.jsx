@@ -59,7 +59,7 @@ export default function View3({ handleNext, handlePrev, sending }) {
                         <button className="button button--prev" onClick={handlePrev}>
                             Previous
                         </button>
-                        <button className="button button--next" onClick={() => validate(handleNext)} disabled={sending}>
+                        <button className={`button button--next ${sending ? "svg-spinners--ring-resize" : ""}`} onClick={() => validate(handleNext)} disabled={sending}>
                             {sending ? "Sending..." : "Submit"}
                         </button>
                     </div>
