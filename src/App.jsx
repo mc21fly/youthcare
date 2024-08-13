@@ -21,7 +21,7 @@ export default function App() {
         const json = await response.json();
 
         if (json && json.status === 200) {
-            setCurrentView("view4");
+            changeView("view4");
             localStorage.clear();
         }
 
@@ -43,9 +43,6 @@ export default function App() {
     return (
         <>
             <Header />
-            {/* <button className="button button--prev" onClick={send}>
-                send
-            </button> */}
             {displayView()}
             <Footer />
         </>
