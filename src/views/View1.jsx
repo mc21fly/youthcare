@@ -78,6 +78,7 @@ export default function View1({ handleNext }) {
                                     "Fictive kin (not related by birth or marriage)",
                                     "Transitional living placement",
                                     "Independent living placement",
+                                    "Residential Treatment",
                                     "Other",
                                 ]}
                                 subCond="Other"

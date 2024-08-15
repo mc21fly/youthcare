@@ -49,10 +49,7 @@ export default function View3({ handleNext, handlePrev, sending }) {
                             </div>
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea id="q74" label="Special educational services received" validator={Validator} />
-                        </div>
-                        <div className="form__fields--row">
-                            <FieldTextarea id="q75" label="Additional notes" validator={Validator} />
+                            <FieldTextarea id="q75" label="Additional notes" validator={Validator} notRequired />
                         </div>
                     </div>
                     <div className="form__footer">

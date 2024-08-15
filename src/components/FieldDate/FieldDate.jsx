@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldDate({ id, label, validator, future }) {
+export default function FieldDate({ id, label, validator, future, notRequired }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
     useEffect(() => {
         const storedAnswer = getStored(id);
-        storedAnswer ? (input.current.value = storedAnswer) : store(id, null);
+        storedAnswer ? (input.current.value = storedAnswer) : store(id, notRequired ? "" : null);
 
         if (validator) validator.addValidation(id, validate);
 
@@ -20,7 +20,7 @@ export default function FieldDate({ id, label, validator, future }) {
         if (target.value !== "" && !isValidDate(target.value)) {
             store(id, null);
         } else if (target.value === "") {
-            store(id, null);
+            store(id, notRequired ? "" : null);
         } else {
             store(id, target.value);
         }
@@ -48,19 +48,35 @@ export default function FieldDate({ id, label, validator, future }) {
     }
 
     function validate() {
-        if (!isValidDate(input.current.value) || input.current.value === "") {
-            input.current.style.border = "1px solid red";
-            return false;
-        }
-
-        if (!future) {
-            if (isFutureDate(input.current.value)) {
+        if (notRequired) {
+            if (input.current.value !== "" && !isValidDate(input.current.value)) {
                 input.current.style.border = "1px solid red";
                 return false;
             }
-        }
 
-        return true;
+            if (!future) {
+                if (input.current.value !== "" && isFutureDate(input.current.value)) {
+                    input.current.style.border = "1px solid red";
+                    return false;
+                }
+            }
+
+            return true;
+        } else {
+            if (!isValidDate(input.current.value) || input.current.value === "") {
+                input.current.style.border = "1px solid red";
+                return false;
+            }
+
+            if (!future) {
+                if (input.current.value !== "" && isFutureDate(input.current.value)) {
+                    input.current.style.border = "1px solid red";
+                    return false;
+                }
+            }
+
+            return true;
+        }
     }
 
     return (

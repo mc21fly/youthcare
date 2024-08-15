@@ -11,7 +11,7 @@ export default function useValidation() {
         setValidators((prev) => [...prev.filter((validator) => validator.id !== id)]);
     }
 
-    function _validate(callback) {
+    function validate(callback) {
         let firstInvalid = null;
 
         const result = validators.map(({ id, validator }) => {
@@ -34,5 +34,5 @@ export default function useValidation() {
         if (!result.includes(false)) callback();
     }
 
-    return [_validate, { addValidation, removeValidation }];
+    return [validate, { addValidation, removeValidation }];
 }

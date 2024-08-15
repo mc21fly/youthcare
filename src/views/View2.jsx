@@ -17,11 +17,11 @@ export default function View2({ handleNext, handlePrev }) {
                     <div className="form__fields">
                         <div className="form__fields--row">
                             <FieldText id="q9" label="Primary care physician" validator={Validator} />
-                            <FieldDate id="q10" label="Date of last visit" validator={Validator} />
+                            <FieldDate id="q10" label="Date of last visit" validator={Validator} notRequired={true} />
                         </div>
                         <div className="form__fields--row">
                             <FieldText id="q11" label="Dental provider" validator={Validator} />
-                            <FieldDate id="q12" label="Date of last visit" validator={Validator} />
+                            <FieldDate id="q12" label="Date of last visit" validator={Validator} notRequired={true} />
                         </div>
                         <div className="form__fields--row">
                             <FieldTextarea id="q13" label="List of member’s medications" validator={Validator} />
@@ -42,18 +42,14 @@ export default function View2({ handleNext, handlePrev }) {
                                 <FieldCheckbox id="q16" label="Asthma" />
                                 <FieldCheckbox id="q17" label="Seizure/epilepsy" />
                                 <FieldCheckbox id="q18" label="Failure to thrive" />
-                                <FieldCheckbox
-                                    id="q19"
-                                    label={`Central nervous system/traumatic \n
-                                        brain injury/shaken baby`}
-                                />
+                                <FieldCheckbox id="q19" label="Central nervous system/traumatic brain injury/shaken baby" />
                                 <FieldCheckbox id="q20" label="Broken bones" />
                                 <FieldCheckbox id="q21" label="Internal injuries" />
                                 <FieldCheckbox id="q22" label="Diabetes" />
                                 <FieldCheckbox id="q23" label="Hemophilia" />
                                 <FieldCheckbox id="q24" label="Sickle cell disease" />
                                 <FieldCheckbox id="q25" label="Cancer" />
-                                <FieldCheckbox id="q26" label={`Cerebral palsy/muscular dystrophy/multiple sclerosis/paralysis`} />
+                                <FieldCheckbox id="q26" label="Cerebral palsy/muscular dystrophy/multiple sclerosis/paralysis" />
                                 <FieldCheckbox id="q27" label="Cystic fibrosis" />
                             </div>
                             <div className="field">
@@ -65,7 +61,7 @@ export default function View2({ handleNext, handlePrev }) {
                                 <FieldCheckbox id="q33" label="Pregnancy" />
                                 <FieldCheckbox id="q34" label="Private duty nursing/skilled nursing visits" />
                                 <FieldCheckbox id="q35" label="Personal care services" />
-                                <FieldCheckbox id="q36" label={`Home medical equipment/Durable Medical Equipment (DME) need identified`} />
+                                <FieldCheckbox id="q36" label="Home medical equipment/Durable Medical Equipment (DME) need identified" />
                                 <FieldCheckbox id="q37" label="Hearing or vision loss (excluding eyeglasses)" />
                                 <FieldCheckbox id="q38" label="Osteogenesis imperfecta (brittle bone disease)" />
                                 <FieldCheckboxText id="q39" label="Any conditions not listed above:" validator={Validator} />
@@ -151,7 +147,10 @@ export default function View2({ handleNext, handlePrev }) {
                             </div>
                         </div>
                         <div className="form__fields--row">
-                            <FieldTextarea id="q62" label="Additional notes" validator={Validator} />
+                            <FieldTextarea id="q74" label="Special educational services received" validator={Validator} notRequired />
+                        </div>
+                        <div className="form__fields--row">
+                            <FieldTextarea id="q62" label="Additional notes" validator={Validator} notRequired />
                         </div>
                     </div>
 

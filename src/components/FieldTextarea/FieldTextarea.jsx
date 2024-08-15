@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldTextarea({ id, label, validator }) {
+export default function FieldTextarea({ id, label, validator, notRequired }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
     useEffect(() => {
         const storedAnswer = getStored(id);
-        storedAnswer ? (input.current.value = storedAnswer) : store(id, null);
+        storedAnswer ? (input.current.value = storedAnswer) : store(id, notRequired ? "" : null);
 
         if (validator) validator.addValidation(id, validate);
 
@@ -21,16 +21,29 @@ export default function FieldTextarea({ id, label, validator }) {
     }
 
     function handleChange({ target }) {
-        store(id, target.value !== "" ? target.value : null);
+        if (notRequired) {
+            store(id, target.value !== "" ? target.value : "");
+        } else {
+            store(id, target.value !== "" ? target.value : null);
+        }
     }
 
     function validate() {
-        if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,\.]*$/g)) {
-            input.current.style.border = "1px solid red";
-            return false;
-        }
+        if (notRequired) {
+            if (input.current.value !== "" && !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:]*$/g)) {
+                input.current.style.border = "1px solid red";
+                return false;
+            }
 
-        return true;
+            return true;
+        } else {
+            if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:]*$/g)) {
+                input.current.style.border = "1px solid red";
+                return false;
+            }
+
+            return true;
+        }
     }
 
     return (
