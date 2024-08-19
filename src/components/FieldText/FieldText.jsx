@@ -31,7 +31,7 @@ export default function FieldText({ id, label, validator, numbers }) {
                 return false;
             }
         } else {
-            if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:]*$/g)) {
+            if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:\-]*$/g)) {
                 input.current.style.border = "1px solid red";
                 return false;
             }
