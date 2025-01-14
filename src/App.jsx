@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Header, Footer } from "./components";
 import { View1, View2, View3, View4 } from "./views";
 import { useStorage } from "./hooks";
@@ -9,7 +9,7 @@ import "simple-notify/dist/simple-notify.css";
 export default function App() {
     const [currentView, setCurrentView] = useState("view1");
     const [sending, setSending] = useState(false);
-    const [, getStored] = useStorage("answers");
+    const [store, getStored] = useStorage("answers");
 
     async function send() {
         setSending(true);
@@ -59,11 +59,18 @@ export default function App() {
     }
 
     function displayView() {
-        if (currentView === "view1") return <View1 handleNext={() => changeView("view2")} />;
-        if (currentView === "view2") return <View2 handleNext={() => changeView("view3")} handlePrev={() => changeView("view1")} />;
-        if (currentView === "view3") return <View3 handleNext={send} handlePrev={() => changeView("view2")} sending={sending} />;
-        if (currentView === "view4") return <View4 />;
+        const isCompleted = document.querySelector("#isCompleted")?.value;
+
+        if (currentView === "view1" && isCompleted !== "Y") return <View1 handleNext={() => changeView("view2")} />;
+        if (currentView === "view2" && isCompleted !== "Y") return <View2 handleNext={() => changeView("view3")} handlePrev={() => changeView("view1")} />;
+        if (currentView === "view3" && isCompleted !== "Y") return <View3 handleNext={send} handlePrev={() => changeView("view2")} sending={sending} />;
+        if (currentView === "view4" || isCompleted === "Y") return <View4 />;
     }
+
+    useEffect(() => {
+        const subKey = document.querySelector("#subKey");
+        store("subscriberKey", subKey?.value);
+    }, []);
 
     return (
         <>

@@ -7,7 +7,7 @@ export default function Footer() {
                     color, national origin, age, disability, or sex.
                 </p>
                 <p>
-                    &copy; 2024. All rights reserved.{" "}
+                    &copy; 2025. All rights reserved.{" "}
                     <a
                         href="https://www.ilmeridian.com/privacy-practices.html?utm_source=salesforce&utm_medium=email&utm_campaign=youthcare&utm_term=yc_fosterparents_members&utm_content=hrs"
                         target="_blank"
