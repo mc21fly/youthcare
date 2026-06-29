@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldCheckboxText({ id, label, validator }) {
+export default function FieldCheckboxText({ id, label, validator, regex }) {
     const input = useRef();
     const checkbox = useRef();
     const [store, getStored] = useStorage("answers");
@@ -43,7 +43,14 @@ export default function FieldCheckboxText({ id, label, validator }) {
     }
 
     function validate() {
-        if (checkbox.current.checked && (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:\-]*$/g))) {
+        if (!checkbox.current.checked) return true;
+
+        const value = input.current.value.trim();
+
+        const fallbackRegex = /^[a-zA-Z\s,.\\\/;:\-\p{L}'’–—]+$/u;
+        const textRegex = regex ? regex : fallbackRegex;
+
+        if (value === "" || !textRegex.test(value)) {
             input.current.style.border = "1px solid red";
             return false;
         }

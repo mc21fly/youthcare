@@ -16,7 +16,9 @@ export default function App() {
         const answers = getStored();
         const translated = translate(answers);
 
-        const response = await fetch("https://cloud.info.ilmeridian.com/youthcare-hrs-backend", {
+        // console.log(translated);
+
+        const response = await fetch("https://cloud.info.ilmeridian.com/api-youthcare-hrs", {
             method: "POST",
             body: JSON.stringify(translated),
         });
@@ -47,8 +49,6 @@ export default function App() {
                 customWrapper: "",
             });
         }
-
-        console.log(json);
 
         setSending(false);
     }

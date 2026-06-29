@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldText({ id, label, validator, numbers }) {
+export default function FieldText({ id, label, labelThin, validator, numbers, notRequired, regex }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
     useEffect(() => {
         const storedAnswer = getStored(id);
-        storedAnswer ? (input.current.value = storedAnswer) : store(id, null);
+        storedAnswer ? (input.current.value = storedAnswer) : store(id, notRequired ? "" : null);
 
         if (validator) validator.addValidation(id, validate);
 
@@ -21,28 +21,54 @@ export default function FieldText({ id, label, validator, numbers }) {
     }
 
     function handleChange({ target }) {
-        store(id, target.value !== "" ? target.value : null);
+        if (notRequired) {
+            store(id, target.value !== "" ? target.value : "");
+        } else {
+            store(id, target.value !== "" ? target.value : null);
+        }
     }
 
     function validate() {
-        if (numbers) {
-            if (input.current.value === "" || !input.current.value.match(/^(\+|)[0-9\-\(\)]*$/g)) {
-                input.current.style.border = "1px solid red";
-                return false;
-            }
-        } else {
-            if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:\-]*$/g)) {
-                input.current.style.border = "1px solid red";
-                return false;
-            }
-        }
+        const value = input.current.value.trim();
 
-        return true;
+        const fallbackRegex = /^[a-zA-Z\s,.\\\/;:\-\p{L}'’–—]+$/u;
+        // const fallbackRegex = /^[a-zA-Z\s,.\\\/;:\-\p{L}'’–—!@#$%^&*()_+={}\[\]|"<>?~`]+$/u;
+        const textRegex = regex ? regex : fallbackRegex;
+
+        if (notRequired) {
+            if (value === "") return true;
+
+            if (numbers) {
+                if (!value.match(/^(\+|)[0-9\-\(\)]*$/g)) {
+                    input.current.style.border = "1px solid red";
+                    return false;
+                }
+            } else {
+                if (!textRegex.test(value)) {
+                    input.current.style.border = "1px solid red";
+                    return false;
+                }
+            }
+            return true;
+        } else {
+            if (numbers) {
+                if (value === "" || !value.match(/^(\+|)[0-9\-\(\)]*$/g)) {
+                    input.current.style.border = "1px solid red";
+                    return false;
+                }
+            } else {
+                if (value === "" || !textRegex.test(value)) {
+                    input.current.style.border = "1px solid red";
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
     return (
         <div className="field">
-            <label htmlFor={id} className="small bold">
+            <label htmlFor={id} className={`small ${labelThin ? "" : "bold"}`}>
                 {label ? label : "Label placeholder"}
             </label>
             <input ref={input} name={id} id={id} type="text" maxLength="255" onBlur={handleBlur} onChange={handleChange} />

@@ -13,6 +13,10 @@ body {
     flex-direction: column;
 }
 
+b {
+    font-weight: 700;
+}
+
 header,
 section,
 footer {
@@ -103,6 +107,9 @@ input:disabled {
     display: flex;
     flex-direction: column;
     width: 410px;
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 150%;
 }
 
 input[type="checkbox"] {
@@ -139,6 +146,24 @@ input[type="radio"] {
     cursor: pointer;
 }
 
+.field__bull {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 15px;
+
+    &::before {
+        content: "•";
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}
+
+.field__bull > label {
+    margin: 0;
+    font-weight: 300;
+    font-size: 18px;
+}
+
 .field__checkbox {
     display: flex;
     align-items: baseline;
@@ -148,11 +173,15 @@ input[type="radio"] {
 .field__checkbox > label {
     margin: 0;
     margin-left: 8px;
+    font-weight: 300;
+    font-size: 18px;
 }
 
 .field__radio > label {
     margin: 0;
     margin-left: 8px;
+    font-weight: 300;
+    font-size: 18px;
 }
 
 input[type="checkbox"]::before {
@@ -347,6 +376,18 @@ label:has(+ .sub-label) {
     margin-bottom: 20px;
 }
 
+.side {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.side .field__radio {
+  flex: 1 1 410px; 
+  max-width: 410px;
+  box-sizing: border-box;
+  margin-right: 30px;
+}
+
 @media only screen and (max-width: 1440px) {
     header,
     section,
@@ -360,6 +401,23 @@ label:has(+ .sub-label) {
 }
 
 @media only screen and (max-width: 1024px) {
+
+    .margin-btm {
+        margin-bottom: 20px !important;
+    }
+
+    .margin-tp {
+        margin-top: 20px !important;
+    }
+
+    .margin-t {
+        margin-top: 35px !important;
+    }
+
+    .margin-t15 {
+        margin-top: 15px !important;
+    }
+
     section,
     .form__fields--row {
         flex-direction: column;

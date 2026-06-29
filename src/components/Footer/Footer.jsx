@@ -7,16 +7,16 @@ export default function Footer() {
                     color, national origin, age, disability, or sex.
                 </p>
                 <p>
-                    &copy; 2025. All rights reserved.{" "}
+                    &copy; 2026. All rights reserved.{" "}
                     <a
-                        href="https://www.ilmeridian.com/privacy-practices.html?utm_source=salesforce&utm_medium=email&utm_campaign=youthcare&utm_term=yc_fosterparents_members&utm_content=hrs"
+                        href="https://www.ilyouthcare.com/privacy-policy.html?utm_source=salesforce&utm_medium=email&utm_campaign=youthcare&utm_term=yc_fosterparents_members&utm_content=privacy"
                         target="_blank"
                     >
                         Privacy Policy
                     </a>
                     &nbsp;{" "}
                     <a
-                        href="https://www.ilmeridian.com/terms-conditions.html?utm_source=salesforce&utm_medium=email&utm_campaign=youthcare&utm_term=yc_fosterparents_members&utm_content=hrs"
+                        href="https://www.ilyouthcare.com/terms-conditions.html?utm_source=salesforce&utm_medium=email&utm_campaign=youthcare&utm_term=yc_fosterparents_members&utm_content=termsconditions"
                         target="_blank"
                     >
                         Terms and Conditions

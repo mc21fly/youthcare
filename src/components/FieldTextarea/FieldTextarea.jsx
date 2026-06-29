@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useStorage } from "../../hooks";
 
-export default function FieldTextarea({ id, label, validator, notRequired }) {
+export default function FieldTextarea({ id, label, validator, notRequired, regex }) {
     const input = useRef();
     const [store, getStored] = useStorage("answers");
 
@@ -29,19 +29,24 @@ export default function FieldTextarea({ id, label, validator, notRequired }) {
     }
 
     function validate() {
+        const value = input.current.value.trim();
+
+        const fallbackRegex = /^[a-zA-Z\s,.\\\/;:\-\p{L}'’–—]+$/u;
+        const textRegex = regex ? regex : fallbackRegex;
+
         if (notRequired) {
-            if (input.current.value !== "" && !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:\-]*$/g)) {
+            if (value === "") return true;
+
+            if (!textRegex.test(value)) {
                 input.current.style.border = "1px solid red";
                 return false;
             }
-
             return true;
         } else {
-            if (input.current.value === "" || !input.current.value.match(/^[a-zA-Z\s\,\.\\\/\;\:\-]*$/g)) {
+            if (value === "" || !textRegex.test(value)) {
                 input.current.style.border = "1px solid red";
                 return false;
             }
-
             return true;
         }
     }

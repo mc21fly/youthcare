@@ -35,18 +35,19 @@ export default function View1({ handleNext }) {
                             <FieldDate id="q1" label="Date of assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText id="q2" label="Member’s chosen name, gender, and/or&nbsp;pronouns" validator={Validator} />
+                            <FieldText id="q2" label="Member’s name" validator={Validator} />
+                            <FieldText id="q3" label="Gender and pronouns" validator={Validator} regex={/^[a-zA-Z\s,.\\\/;:\-\p{L}'’–—()&]+$/u} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText id="q3" label="Name of person completing assessment" validator={Validator} />
+                            <FieldText id="q4" label="Name of person completing assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
-                            <FieldText id="q4" label="Phone number of person completing assessment" validator={Validator} numbers={true} />
-                            <FieldEmail id="q5" label="Email of person completing assessment" validator={Validator} />
+                            <FieldText id="q5" label="Phone number of person completing assessment" validator={Validator} numbers={true} />
+                            <FieldEmail id="q6" label="Email of person completing assessment" validator={Validator} />
                         </div>
                         <div className="form__fields--row">
                             <FieldSelect
-                                id="q6"
+                                id="q7"
                                 label="Relationship of the person completing this assessment to the YouthCare member"
                                 options={[
                                     "Biological parent",
@@ -65,7 +66,7 @@ export default function View1({ handleNext }) {
                         </div>
                         <div className="form__fields--row">
                             <FieldSelect
-                                id="q7"
+                                id="q8"
                                 label="Youth placement at time of assessment"
                                 options={[
                                     "Foster home",
@@ -88,7 +89,7 @@ export default function View1({ handleNext }) {
                         </div>
                         <div className="form__fields--row">
                             <FieldSelect
-                                id="q8"
+                                id="q9"
                                 label="DCFS permanency goal"
                                 options={[
                                     "Return home",
